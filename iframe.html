@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Child Iframe</title>
+  </head>
+  <body>
+    <h2>Child Iframe Content</h2>
+    <input type="text" id="messageInput" placeholder="Enter message" />
+    <button id="sendMessageBtn">Send Message to Parent</button>
+    <p id="messageDisplay"></p>
+    <!-- Text element to display message -->
+
+    <script>
+      const sendMessageBtn = document.getElementById("sendMessageBtn");
+      const messageInput = document.getElementById("messageInput");
+      const messageDisplay = document.getElementById("messageDisplay");
+
+      sendMessageBtn.addEventListener("click", function () {
+        const message = messageInput.value;
+        window.parent.postMessage(message, "*");
+      });
+
+      // Function to handle messages from parent window
+      window.addEventListener("message", function (event) {
+        console.log("Message from parent:", event.data);
+        // Update the text element with received message
+        messageDisplay.textContent = `Message from parent: ${event.data}`;
+      });
+    </script>
+  </body>
+</html>
